@@ -1,0 +1,6 @@
+@ZP_Filapek_Felkel_Makowiejczuk_HostAddress = http://localhost:5069
+
+GET {{ZP_Filapek_Felkel_Makowiejczuk_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
