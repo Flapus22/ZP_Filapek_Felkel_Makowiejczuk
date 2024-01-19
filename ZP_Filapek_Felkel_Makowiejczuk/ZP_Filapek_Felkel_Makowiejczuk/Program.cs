@@ -7,6 +7,7 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Text;
 using ZP_Filapek_Felkel_Makowiejczuk.Interface.Authentication;
+using ZP_Filapek_Felkel_Makowiejczuk.Model.Authentication;
 using ZP_Filapek_Felkel_Makowiejczuk.Services.Authentication;
 
 
