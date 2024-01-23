@@ -14,47 +14,33 @@ internal class Program
         DBContext context = new DBContext();
 
         GenerateUser();
-        foreach (var user in users)
-        {
-            user.Id = 0; // Let SQL Server generate this
-        }
+
         context.Users.AddRange(users);
         context.SaveChanges();
         users = context.Users.ToList();
 
         GenerateLesson();
-        foreach (var lesson in lessons)
-        {
-            lesson.Id = 0; // Let SQL Server generate this
-        }
+     
         context.Lessons.AddRange(lessons);
         context.SaveChanges();
         lessons = context.Lessons.ToList();
 
         GenerateGrade();
-        foreach (var grade in grades)
-        {
-            grade.Id = 0; // Let SQL Server generate this
-        }
+        
         context.Grades.AddRange(grades);
         context.SaveChanges();
         grades = context.Grades.ToList();
 
         GenerateStudentClass();
-        foreach (var studentClass in studentClasses)
-        {
-            studentClass.Id = 0; // Let SQL Server generate this
-        }
+       
         context.StudentClasses.AddRange(studentClasses);
-        context.SaveChanges();
-        studentClasses = context.StudentClasses.ToList();
-
+        context.SaveChanges();   
     }
 
     private static void GenerateUser()
     {
         var userFaker = new Faker<User>("pl")
-            .RuleFor(u => u.Id, f => f.IndexFaker)
+            .RuleFor(u => u.Id, 0)
             .RuleFor(u => u.Email, f => f.Person.Email)
             .RuleFor(u => u.PasswordHash, f => f.Random.Hash())
             .RuleFor(u => u.FirstName, f => f.Person.FirstName)
@@ -78,7 +64,7 @@ internal class Program
     private static void GenerateLesson()
     {
         var lessonFaker = new Faker<Lesson>("pl")
-            .RuleFor(l => l.Id, f => f.IndexFaker)
+            .RuleFor(u => u.Id, 0)
             .RuleFor(l => l.Name, f => f.Lorem.Word())
             .RuleFor(l => l.TeacherID, f => f.PickRandom(users.Where(u => u.UserType == UserType.Teacher).Select(u => u.Id)))
             .RuleFor(l => l.Date, f => f.Date.Future());
@@ -89,7 +75,7 @@ internal class Program
     private static void GenerateGrade()
     {
         var gradeFaker = new Faker<Grade>("pl")
-            .RuleFor(g => g.Id, f => f.IndexFaker)
+            .RuleFor(u => u.Id, 0)
             .RuleFor(g => g.StudentID, f => f.PickRandom(users.Where(u => u.UserType == UserType.Student).Select(u => u.Id)))
             .RuleFor(g => g.TeacherID, f => f.PickRandom(users.Where(u => u.UserType == UserType.Teacher).Select(u => u.Id)))
             .RuleFor(g => g.LessonID, f => f.PickRandom(lessons.Select(l => l.Id)))
@@ -102,7 +88,7 @@ internal class Program
     private static void GenerateStudentClass()
     {
         var studentClassFaker = new Faker<StudentClass>("pl")
-            .RuleFor(sc => sc.Id, f => f.IndexFaker)
+            .RuleFor(u => u.Id, 0)
             .RuleFor(sc => sc.StudentID, f => f.PickRandom(users.Where(u => u.UserType == UserType.Student).Select(u => u.Id)))
             .RuleFor(sc => sc.LessonID, f => f.PickRandom(lessons.Select(l => l.Id)));
 
