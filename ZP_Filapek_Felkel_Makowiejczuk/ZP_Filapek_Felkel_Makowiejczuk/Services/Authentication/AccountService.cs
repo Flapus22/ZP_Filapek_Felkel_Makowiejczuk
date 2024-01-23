@@ -27,18 +27,18 @@ namespace ZP_Filapek_Felkel_Makowiejczuk.Services.Authentication
             this.authenticationSettings = authenticationSettings;
         }
 
-        public void RegisterUser(RegisterUser registerUser)
+    public void RegisterUser(RegisterUser registerUser)
+    {
+        var newUser = new User
         {
-            var newUser = new User
-            {
-                Email = registerUser.Email,
-                FirstName = registerUser.FirstName,
-                LastName = registerUser.LastName,
-                DateOfBirth = registerUser.DateOfBirth,
-                PasswordHash = passwordHasher.HashPassword(null, registerUser.Password)
-            };
-            var hashedPassword = passwordHasher.HashPassword(newUser, registerUser.Password);
-            newUser.PasswordHash = hashedPassword;
+            Email = registerUser.Email,
+            FirstName = registerUser.FirstName,
+            LastName = registerUser.LastName,
+            DateOfBirth = registerUser.DateOfBirth,
+            PasswordHash = passwordHasher.HashPassword(null, registerUser.Password)
+        };
+        var hashedPassword = passwordHasher.HashPassword(newUser, registerUser.Password);
+        newUser.PasswordHash = hashedPassword;
 
             context.Users.Add(newUser);
             context.SaveChanges();
