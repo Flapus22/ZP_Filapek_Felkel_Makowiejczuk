@@ -32,7 +32,13 @@ public class AccountService : IAccountService
             FirstName = registerUser.FirstName,
             LastName = registerUser.LastName,
             DateOfBirth = registerUser.DateOfBirth,
-            PasswordHash = passwordHasher.HashPassword(null, registerUser.Password)
+            PasswordHash = passwordHasher.HashPassword(null, registerUser.Password),
+            City = registerUser.City,
+            District = registerUser.District,
+            Street = registerUser.Street,
+            PostalCode = registerUser.PostalCode,
+            HouseNumber = registerUser.HouseNumber,
+            UserType = registerUser.UserType
         };
         var hashedPassword = passwordHasher.HashPassword(newUser, registerUser.Password);
         newUser.PasswordHash = hashedPassword;
