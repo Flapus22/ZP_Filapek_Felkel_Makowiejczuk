@@ -24,7 +24,7 @@ namespace ZP_Filapek_Felkel_Makowiejczuk.Controllers
         {
             try
             {
-                // Pobierz identyfikator, imię i nazwisko zalogowanego użytkownika z JWT
+                
                 var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
                 var userName = User.Identity?.Name;
 
@@ -33,7 +33,7 @@ namespace ZP_Filapek_Felkel_Makowiejczuk.Controllers
                     return BadRequest("Nie można uzyskać dostępu do informacji o użytkowniku.");
                 }
 
-                // Pobierz dane użytkownika
+                
                 var userData = accountService.GetUserData(userId);
 
                 if (userData == null)
@@ -41,7 +41,7 @@ namespace ZP_Filapek_Felkel_Makowiejczuk.Controllers
                     return NotFound("Nie znaleziono użytkownika.");
                 }
 
-                // Możesz dostosować odpowiedź, dodając dodatkowe informacje z JWT
+                
                 var response = new
                 {
                     UserId = userId,
@@ -62,7 +62,7 @@ namespace ZP_Filapek_Felkel_Makowiejczuk.Controllers
         {
             try
             {
-                // Pobierz identyfikator zalogowanego użytkownika
+                
                 var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
                 if (userId == null)
@@ -70,7 +70,7 @@ namespace ZP_Filapek_Felkel_Makowiejczuk.Controllers
                     return BadRequest("Nie można uzyskać dostępu do informacji o użytkowniku.");
                 }
 
-                // Aktualizuj dane użytkownika
+                
                 var success = accountService.UpdateUserData(userId, updateUserData);
 
                 if (!success)
