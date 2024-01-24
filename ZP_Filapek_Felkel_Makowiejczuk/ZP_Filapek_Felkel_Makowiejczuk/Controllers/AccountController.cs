@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using FluentValidation;
+using Microsoft.AspNetCore.Mvc;
 using ZP_Filapek_Felkel_Makowiejczuk.Dto;
 using ZP_Filapek_Felkel_Makowiejczuk.Interface.Authentication;
 
@@ -9,17 +10,38 @@ namespace ZP_Filapek_Felkel_Makowiejczuk.Controllers;
 public class AccountController : Controller
 {
     private readonly IAccountService accountService;
+    private readonly IValidator<RegisterUser> validator;
 
-    public AccountController(IAccountService accountService)
+    public AccountController(IAccountService accountService, IValidator<RegisterUser> validator)
     {
         this.accountService = accountService;
+        this.validator = validator;
     }
 
     [HttpPost("register")]
     public IActionResult RegisterUser([FromBody] RegisterUser registerUser)
     {
-        accountService.RegisterUser(registerUser);
-        return Ok();
+        //accountService.RegisterUser(registerUser);
+        //return Ok();
+
+        var validateResult = validator.Validate(registerUser);
+
+        if (validateResult.IsValid)
+        {
+            try
+            {
+                accountService.RegisterUser(registerUser);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Register Error: {ex.Message}");
+            }
+        }
+        else
+        {
+            return BadRequest(validateResult.Errors);
+        }
     }
 
     [HttpPost("login")]
