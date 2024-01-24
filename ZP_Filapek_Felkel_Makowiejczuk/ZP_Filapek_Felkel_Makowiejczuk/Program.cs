@@ -1,14 +1,17 @@
 using Data;
 using Data.Model;
+using FluentValidation;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Text;
+using ZP_Filapek_Felkel_Makowiejczuk.Dto;
 using ZP_Filapek_Felkel_Makowiejczuk.Interface.Authentication;
 using ZP_Filapek_Felkel_Makowiejczuk.Model.Authentication;
 using ZP_Filapek_Felkel_Makowiejczuk.Services.Authentication;
+using ZP_Filapek_Felkel_Makowiejczuk.Validator.Authentication;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -81,6 +84,9 @@ builder.Services.AddScoped<IAccountService, AccountService>();
 builder.Services.AddSingleton(authenticationSettings);
 
 builder.Services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
+
+//Validator
+builder.Services.AddScoped<IValidator<RegisterUser>, RegisterUserValidator>();
 
 //builder.Services.AddScoped<
 var app = builder.Build();
