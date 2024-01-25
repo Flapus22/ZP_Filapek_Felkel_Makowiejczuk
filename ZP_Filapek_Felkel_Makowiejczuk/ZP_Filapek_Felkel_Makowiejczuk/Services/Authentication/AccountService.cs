@@ -35,7 +35,13 @@ public class AccountService : IAccountService
             FirstName = registerUser.FirstName,
             LastName = registerUser.LastName,
             DateOfBirth = registerUser.DateOfBirth,
-            PasswordHash = passwordHasher.HashPassword(null, registerUser.Password)
+            PasswordHash = passwordHasher.HashPassword(null, registerUser.Password),
+            City = registerUser.City,
+            Street = registerUser.Street,
+            District = registerUser.District,
+            HouseNumber = registerUser.HouseNumber,
+            PostalCode = registerUser.PostalCode,
+            UserType = registerUser.UserType
         };
         var hashedPassword = passwordHasher.HashPassword(newUser, registerUser.Password);
         newUser.PasswordHash = hashedPassword;
@@ -81,65 +87,6 @@ public class AccountService : IAccountService
         return tokenHandler.WriteToken(token);
     }
 
-    public UpdateUserDataDto GetUserData(string userId)
-    {
-        var user = context.Users.Find(userId);
 
-        if (user == null)
-        {
-            return null;
-        }
-
-        var userData = new UpdateUserDataDto()
-        {
-            Email = user.Email,
-            FirstName = user.FirstName,
-            LastName = user.LastName,
-            DateOfBirth = user.DateOfBirth,
-            City = user.City,
-            District = user.District,
-            Street = user.Street,
-            PostalCode = user.PostalCode,
-            HouseNumber = user.HouseNumber,
-            UserType = user.UserType
-        };
-
-        return userData;
-    }
-
-    public bool UpdateUserData(string userId, UpdateUserDataDto updateUserData)
-    {
-        var user = context.Users.Find(userId);
-
-        if (user == null)
-        {
-            return false;
-        }
-
-
-        if (!string.IsNullOrEmpty(updateUserData.Email))
-        {
-            user.Email = updateUserData.Email;
-        }
-
-        //if (!string.IsNullOrEmpty(updateUserData.Password))
-        //{
-
-        //    user.PasswordHash = passwordHasher.HashPassword(user, updateUserData.Password);
-        //}
-
-        if (!string.IsNullOrEmpty(updateUserData.FirstName))
-        {
-            user.FirstName = updateUserData.FirstName;
-        }
-
-        if (!string.IsNullOrEmpty(updateUserData.LastName))
-        {
-            user.LastName = updateUserData.LastName;
-        }
-
-        context.SaveChanges();
-        return true;
-    }
 
 }

@@ -8,6 +8,4 @@ public interface IAccountService
 {
     public void RegisterUser(RegisterUser registerUser);
     public string Login(Login login);
-    UpdateUserDataDto GetUserData(string userId);
-    bool UpdateUserData(string userId, UpdateUserDataDto updateUserData);
 }

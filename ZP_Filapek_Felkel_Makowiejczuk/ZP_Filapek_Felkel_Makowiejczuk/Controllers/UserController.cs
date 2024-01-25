@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using FluentValidation;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Security.Claims;
@@ -12,67 +13,75 @@ namespace ZP_Filapek_Felkel_Makowiejczuk.Controllers;
 [Route("api/user")]
 public partial class UserController : ControllerBase
 {
-    private readonly IAccountService accountService;
+    private readonly IUserService userService;
+    private readonly IValidator<UpdateUserDataDto> validator;
 
-    public UserController(IAccountService accountService)
+    public UserController(IUserService userService, IValidator<UpdateUserDataDto> validator)
     {
-        this.accountService = accountService;
+        this.userService = userService;
+        this.validator = validator;
     }
 
     [HttpGet("profile")]
     public IActionResult GetUserProfile()
     {
-        try
+        var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+        if (userId == null)
         {
-            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-
-            if (userId == null)
-            {
-                return BadRequest("Nie można uzyskać dostępu do informacji o użytkowniku.");
-            }
-
-            var userData = accountService.GetUserData(userId);
-
-            if (userData == null)
-            {
-                return NotFound("Nie znaleziono użytkownika.");
-            }
-
-            return Ok(new
-            {
-                UserData = userData
-            });
+            return BadRequest("Nie można uzyskać dostępu do informacji o użytkowniku.");
         }
-        catch (Exception ex)
+
+        if (!int.TryParse(userId, out var userIdNumber))
         {
-            return StatusCode(500, $"Wystąpił błąd: {ex.Message}");
+            return BadRequest("Nieprawidlowy identyfikator użytkownika");
         }
+
+        var userData = userService.GetUserData(userIdNumber);
+
+        if (userData == null)
+        {
+            return NotFound("Nie znaleziono użytkownika.");
+        }
+
+        return Ok(new
+        {
+            UserData = userData
+        });
     }
 
-    [HttpPut("update")]
+    [HttpPut]
     public IActionResult UpdateUserProfile([FromBody] UpdateUserDataDto updateUserData)
     {
-        try
-        {
-            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+        var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
-            if (userId == null)
+        if (userId == null)
+        {
+            return BadRequest("Nie można uzyskać dostępu do informacji o użytkowniku.");
+        }
+
+        if (!int.TryParse(userId, out var userIdNumber))
+        {
+            return BadRequest("Nieprawidlowy identyfikator użytkownika");
+        }
+
+        var validationResult = validator.Validate(updateUserData);
+
+        if (!validationResult.IsValid)
+        {
+            foreach (var error in validationResult.Errors)
             {
-                return BadRequest("Nie można uzyskać dostępu do informacji o użytkowniku.");
+                ModelState.TryAddModelError(error.PropertyName, error.ErrorMessage);
             }
 
-            var success = accountService.UpdateUserData(userId, updateUserData);
-
-            if (!success)
-            {
-                return NotFound("Nie znaleziono użytkownika do zaktualizowania.");
-            }
-
-            return Ok("Dane użytkownika zostały zaktualizowane.");
+            return ValidationProblem(ModelState);
         }
-        catch (Exception ex)
+
+        if (!userService.UpdateUserData(userIdNumber, updateUserData))
         {
-            return StatusCode(500, $"Wystąpił błąd: {ex.Message}");
+            return NotFound("Błąd przy aktualizowaniu danych");
         }
+
+        return Ok("Dane użytkownika zostały zaktualizowane.");
     }
 }

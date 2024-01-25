@@ -7,6 +7,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Text;
+using ZP_Filapek_Felkel_Makowiejczuk.Controllers;
 using ZP_Filapek_Felkel_Makowiejczuk.Dto;
 using ZP_Filapek_Felkel_Makowiejczuk.Interface.Authentication;
 using ZP_Filapek_Felkel_Makowiejczuk.Model.Authentication;
@@ -81,12 +82,14 @@ builder.Services.AddAuthorization();
 
 builder.Services.AddDbContext<DBContext>();
 builder.Services.AddScoped<IAccountService, AccountService>();
+builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddSingleton(authenticationSettings);
 
 builder.Services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
 
 //Validator
 builder.Services.AddScoped<IValidator<RegisterUser>, RegisterUserValidator>();
+builder.Services.AddScoped<IValidator<UpdateUserDataDto>, UpdateUserDataValidator>();
 
 //builder.Services.AddScoped<
 var app = builder.Build();
