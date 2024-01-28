@@ -9,8 +9,10 @@ using Microsoft.OpenApi.Models;
 using System.Text;
 using ZP_Filapek_Felkel_Makowiejczuk.Controllers;
 using ZP_Filapek_Felkel_Makowiejczuk.Dto;
+using ZP_Filapek_Felkel_Makowiejczuk.Interface;
 using ZP_Filapek_Felkel_Makowiejczuk.Interface.Authentication;
 using ZP_Filapek_Felkel_Makowiejczuk.Model.Authentication;
+using ZP_Filapek_Felkel_Makowiejczuk.Services;
 using ZP_Filapek_Felkel_Makowiejczuk.Services.Authentication;
 using ZP_Filapek_Felkel_Makowiejczuk.Validator.Authentication;
 
@@ -82,6 +84,7 @@ builder.Services.AddAuthorization();
 
 builder.Services.AddDbContext<DBContext>();
 builder.Services.AddScoped<IAccountService, AccountService>();
+builder.Services.AddScoped<IGradeService, GradeService>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddSingleton(authenticationSettings);
 
