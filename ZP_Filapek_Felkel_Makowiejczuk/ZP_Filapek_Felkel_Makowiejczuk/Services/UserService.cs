@@ -24,7 +24,6 @@ public class UserService : IUserService
 
         var userData = new UpdateUserDataDto()
         {
-            Email = user.Email,
             FirstName = user.FirstName,
             LastName = user.LastName,
             DateOfBirth = user.DateOfBirth,
