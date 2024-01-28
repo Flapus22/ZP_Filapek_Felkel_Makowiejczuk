@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ZP_Filapek_Felkel_Makowiejc
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Data", "Data\Data.csproj", "{69A8A49F-A639-4A59-9F29-8D9F8329D8A4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GenerateDataBogus", "GenerateDataHumanizer\GenerateDataBogus.csproj", "{0C616566-E271-404E-8324-11655124ADD8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GenerateDataBogus", "GenerateDataBogus\GenerateDataBogus.csproj", "{A13FD65F-B357-4360-BAE1-591F81D90CF6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,10 +23,10 @@ Global
 		{69A8A49F-A639-4A59-9F29-8D9F8329D8A4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{69A8A49F-A639-4A59-9F29-8D9F8329D8A4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{69A8A49F-A639-4A59-9F29-8D9F8329D8A4}.Release|Any CPU.Build.0 = Release|Any CPU
-		{0C616566-E271-404E-8324-11655124ADD8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0C616566-E271-404E-8324-11655124ADD8}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{0C616566-E271-404E-8324-11655124ADD8}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{0C616566-E271-404E-8324-11655124ADD8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A13FD65F-B357-4360-BAE1-591F81D90CF6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A13FD65F-B357-4360-BAE1-591F81D90CF6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A13FD65F-B357-4360-BAE1-591F81D90CF6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A13FD65F-B357-4360-BAE1-591F81D90CF6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
