@@ -5,9 +5,9 @@ namespace ZP_Filapek_Felkel_Makowiejczuk.Interface
 {
     public interface IGradeService
     {
-        void AddGrade(int userId, GradeDto gradeDto)
-        {
-            // Implementation to add the grade
-        }
+        public IEnumerable<GradeDto> GetGradeListByStudentId(int studentId, int teacherId);
+        public IEnumerable<GradeDto> GetGradeListByStudentId(int studentId, int teacherId, int count);
+        public void AddGrade(int userId, NewGradeDto gradeDto);
+        public void UpdateGrade(int teacherId, GradeDto gradeDto);
     }
 }
