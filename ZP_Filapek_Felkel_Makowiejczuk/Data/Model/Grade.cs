@@ -10,6 +10,6 @@ public class Grade
     public User Student { get; set; }
     public int TeacherID { get; set; }
     public User Teacher { get; set; }
-    public int LessonID { get; set; }
+    public int? LessonID { get; set; }
     public Lesson Lesson { get; set; }
 }
